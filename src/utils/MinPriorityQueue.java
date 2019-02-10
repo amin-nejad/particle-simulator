@@ -29,7 +29,7 @@ public class MinPriorityQueue<T extends Comparable<T>> {
         int parentIndex = findParentsIndex(index);
         queue[index] = elem;
 
-        // while the element is smaller than the parent, then swap them
+        // while the element is smaller than the parent, swap them
         while (elem.compareTo(queue[parentIndex]) < 0) {
             swap(index, parentIndex);
             index = parentIndex;
@@ -85,11 +85,11 @@ public class MinPriorityQueue<T extends Comparable<T>> {
 
     }
 
-    private int findLeftChild(int i) {
+    private int findLeftChildIndex(int i) {
         return 2*i;
     }
 
-    private int findRightChild(int i) {
+    private int findRightChildIndex(int i) {
         return 2*i + 1;
     }
 
@@ -98,13 +98,15 @@ public class MinPriorityQueue<T extends Comparable<T>> {
     }
 
     private int findSmallerChildIndex(int i) {
-        int leftChildIndex = findLeftChild(i);
-        int rightChildIndex = findRightChild(i);
+        int leftChildIndex = findLeftChildIndex(i);
+        int rightChildIndex = findRightChildIndex(i);
 
-        // special case for when right child is null but left child is not
         if (queue[leftChildIndex] == null) {
             throw new NullPointerException();
-        } else if (queue[rightChildIndex] == null) {
+        }
+
+        // special case for when right child is null but left child is not
+        if (queue[rightChildIndex] == null) {
             return leftChildIndex;
         }
 

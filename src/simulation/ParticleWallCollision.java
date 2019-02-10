@@ -10,10 +10,8 @@ public class ParticleWallCollision extends Collision {
     }
 
     public void happen(ParticleEventHandler h) {
+        Particle.collide(this.getParticles()[0], wall);
         h.reactTo(this);
     }
 
-    public boolean isValid() {
-
-    }
 }

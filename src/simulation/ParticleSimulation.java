@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 import utils.MinPriorityQueue;
 
-public class ParticleSimulation implements Runnable, ParticleEventHandler{
+public class ParticleSimulation implements Runnable {
 
     private static final long FRAME_INTERVAL_MILLIS = 40;
     
@@ -15,6 +15,7 @@ public class ParticleSimulation implements Runnable, ParticleEventHandler{
      * Constructor.
      */
     public ParticleSimulation(String name, ParticlesModel m) {
+        this.model = m;
         // TODO implement constructor
     }
 
@@ -32,14 +33,6 @@ public class ParticleSimulation implements Runnable, ParticleEventHandler{
         }
         
         // TODO complete implementing this method
-    }
-
-    public void reactTo(Tick tick){
-
-    }
-
-    public void reactTo(Collision c){
-
     }
 
 }

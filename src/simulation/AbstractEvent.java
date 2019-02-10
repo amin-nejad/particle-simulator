@@ -27,7 +27,9 @@ public abstract class AbstractEvent implements Event, Comparable<Event> {
 
         if (this.time < that.time()) {
             return -1;
-        } else if (this.time == that.time()) {
+        }
+
+        if (this.time == that.time()) {
             return 0;
         }
 

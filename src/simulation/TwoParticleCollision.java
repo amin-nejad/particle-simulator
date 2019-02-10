@@ -6,12 +6,9 @@ public class TwoParticleCollision extends Collision {
         super(t, new Particle[]{p1, p2});
     }
 
-    public void happen(ParticleEventHandler h){
-
-    }
-
-    public boolean isValid(){
-
+    public void happen(ParticleEventHandler h) {
+        Particle.collide(getParticles()[0], getParticles()[1]);
+        h.reactTo(this);
     }
 
 }
