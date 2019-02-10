@@ -10,6 +10,7 @@ public class ParticleSimulation implements Runnable, ParticleEventHandler{
     
     private final ParticlesModel          model;
     private final ParticlesView           screen;
+    private MinPriorityQueue<Event> queue;
     
     /**
      * Constructor.
@@ -32,6 +33,12 @@ public class ParticleSimulation implements Runnable, ParticleEventHandler{
         }
         
         // TODO complete implementing this method
+    }
+
+    // not sure about this
+    public static void main(String[] args) {
+        ParticleSimulation simulation = new ParticleSimulation();
+        simulation.run();
     }
 
 }
