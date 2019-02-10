@@ -43,16 +43,16 @@ public class MinPriorityQueue<T extends Comparable<T>> {
      * Removes, and returns, the element at the front of the queue.
      */
     public T remove() {
-        int i = 1;
-        T front = queue[i];
-        queue[i] = queue[sizePointer - 1]; // should be -1!
+        int index = 1;
+        T front = queue[index];
+        queue[index] = queue[sizePointer - 1]; // should be -1!
         queue[sizePointer - 1] = null;
-        int smallerChildIndex = findSmallerChildIndex(i);
+        int smallerChildIndex = findSmallerChildIndex(index);
 
         // while the element is greater than the smaller child
-        while (queue[i].compareTo(queue[smallerChildIndex]) > 0) {
-            swap(i, smallerChildIndex);
-            i = smallerChildIndex;
+        while (queue[index].compareTo(queue[smallerChildIndex]) > 0) {
+            swap(index, smallerChildIndex);
+            index = smallerChildIndex;
             try {
                 smallerChildIndex = findSmallerChildIndex(smallerChildIndex);
             } catch (NullPointerException npe) {
@@ -101,11 +101,18 @@ public class MinPriorityQueue<T extends Comparable<T>> {
         int leftChildIndex = findLeftChild(i);
         int rightChildIndex = findRightChild(i);
 
+        // special case for when right child is null but left child is not
+        if (queue[leftChildIndex] == null) {
+            throw new NullPointerException();
+        } else if (queue[rightChildIndex] == null) {
+            return leftChildIndex;
+        }
+
         if (queue[leftChildIndex].compareTo(queue[rightChildIndex]) < 0) {
             return leftChildIndex;
-        } else {
-            return rightChildIndex;
         }
+
+        return rightChildIndex;
     }
 
 }
