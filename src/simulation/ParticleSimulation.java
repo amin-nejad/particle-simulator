@@ -34,4 +34,12 @@ public class ParticleSimulation implements Runnable, ParticleEventHandler{
         // TODO complete implementing this method
     }
 
+    public void reactTo(Tick tick){
+
+    }
+
+    public void reactTo(Collision c){
+
+    }
+
 }
