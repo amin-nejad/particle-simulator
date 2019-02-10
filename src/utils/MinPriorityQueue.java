@@ -2,16 +2,15 @@ package utils;
 
 public class MinPriorityQueue<T extends Comparable<T>> {
 
-    private T[] queue;
-    private int sizePointer;
+    private static final int MAX_QUEUE_SIZE = 4096;
+    private T[] queue = (T[]) new Comparable[MAX_QUEUE_SIZE];
+    private int sizePointer = 2;
 
     /**
      * Creates an empty queue.
      */
-    public MinPriorityQueue(T[] t, int length) {
-        // TODO factory?
-        this.queue = t;
-        this.sizePointer = length;
+    public MinPriorityQueue(T t) {
+        queue[1] = t;
     }
 
     /**
