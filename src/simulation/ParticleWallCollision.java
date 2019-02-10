@@ -1,16 +1,19 @@
 package simulation;
 
-public class ParticleWallCollision extends AbstractEvent {
+public class ParticleWallCollision extends Collision {
 
-    public ParticleWallCollision(){
+    private Wall wall;
 
+    public ParticleWallCollision(Particle p, Wall w, double t) {
+        super(t, new Particle[]{p});
+        this.wall = w;
     }
 
-    public void happen(ParticleEventHandler h){
-
+    public void happen(ParticleEventHandler h) {
+        h.reactTo(this);
     }
 
-    public boolean isValid(){
+    public boolean isValid() {
 
     }
 }

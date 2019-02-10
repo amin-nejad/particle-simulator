@@ -9,3 +9,4 @@
 #Ignore generated files
 *.class
 
+.idea/workspace.xml

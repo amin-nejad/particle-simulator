@@ -1,9 +1,9 @@
 package simulation;
 
-public class TwoParticleCollision extends AbstractEvent {
+public class TwoParticleCollision extends Collision {
 
-    public TwoParticleCollision(){
-
+    public TwoParticleCollision(Particle p1, Particle p2, double t) {
+        super(t, new Particle[]{p1, p2});
     }
 
     public void happen(ParticleEventHandler h){
