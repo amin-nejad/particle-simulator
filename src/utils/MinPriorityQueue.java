@@ -4,8 +4,7 @@ import simulation.Event;
 
 public class MinPriorityQueue<T extends Comparable<T>> {
 
-    private static final int MAX_QUEUE_SIZE = 8192;
-    private T[] queue = (T[]) new Comparable[MAX_QUEUE_SIZE];
+    private T[] queue = (T[]) new Comparable[1024];
     private int sizePointer = 2;
 
     /**
@@ -26,6 +25,8 @@ public class MinPriorityQueue<T extends Comparable<T>> {
      * Adds elem to the queue.
      */
     public void add(T elem) {
+        ensureCapacity(sizePointer*2);
+
         int index = sizePointer;
         int parentIndex = findParentsIndex(index);
         queue[index] = elem;
@@ -119,6 +120,18 @@ public class MinPriorityQueue<T extends Comparable<T>> {
         }
 
         return rightChildIndex;
+    }
+
+    private void ensureCapacity(int cap) {
+        if (queue.length < cap) {
+            T[] newQueue = (T[]) new Comparable[queue.length*2];
+
+            for (int i = 0; i < queue.length; i++) {
+                newQueue[i] = queue[i];
+            }
+
+            queue = newQueue;
+        }
     }
 
 }

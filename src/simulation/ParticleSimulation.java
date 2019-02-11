@@ -67,6 +67,10 @@ public class ParticleSimulation implements Runnable, ParticleEventHandler {
 
     @Override
     public void reactTo(Collision c) {
-        queue.add(c);
+        for (Particle p : c.getParticles()) {
+            for (Collision col : model.predictCollisions(p, c.time())) {
+                queue.add(col);
+            }
+        }
     }
 }
