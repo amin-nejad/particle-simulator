@@ -1,8 +1,10 @@
 package utils;
 
+import simulation.Event;
+
 public class MinPriorityQueue<T extends Comparable<T>> {
 
-    private static final int MAX_QUEUE_SIZE = 4096;
+    private static final int MAX_QUEUE_SIZE = 8192;
     private T[] queue = (T[]) new Comparable[MAX_QUEUE_SIZE];
     private int sizePointer = 2;
 
@@ -33,6 +35,9 @@ public class MinPriorityQueue<T extends Comparable<T>> {
             swap(index, parentIndex);
             index = parentIndex;
             parentIndex = findParentsIndex(parentIndex);
+            if (parentIndex < 1) {
+                break;
+            }
         }
 
         sizePointer++;
@@ -79,7 +84,7 @@ public class MinPriorityQueue<T extends Comparable<T>> {
     // helper method for debugging
     public void print() {
         for (int i = 0; i < sizePointer; i++) {
-            System.out.println(queue[i]);
+            System.out.println(((Event) queue[i]).time());
         }
 
     }
