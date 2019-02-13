@@ -4,32 +4,40 @@ import simulation.Event;
 
 public class MinPriorityQueue<T extends Comparable<T>> {
 
-    private T[] queue = (T[]) new Comparable[1024];
-    private int sizePointer = 2;
+    private T[] queue;
+    private static final int MIN_SIZE = 1024;
+    private int sizePointer = 1; // initiate starting size to 1, so we have nice child/parent tree structure
 
     /**
      * Creates an empty queue.
      */
-    public MinPriorityQueue(T t) {
-        queue[1] = t;
+    public MinPriorityQueue() {
+        queue = (T[]) new Comparable[MIN_SIZE];
     }
 
     /**
      * Returns the number of elements currently in the queue.
      */
     public int size() {
-        return sizePointer;
+        return sizePointer - 1;
     }
     
     /**
      * Adds elem to the queue.
      */
     public void add(T elem) {
+        int index = sizePointer++;
         ensureCapacity(sizePointer*2);
 
-        int index = sizePointer;
-        int parentIndex = findParentsIndex(index);
+        // add elem to the back
         queue[index] = elem;
+
+        int parentIndex = findParentsIndex(index);
+
+        // if queue was initially empty
+        if (parentIndex < 1) {
+            return;
+        }
 
         // while the element is smaller than the parent, swap them
         while (elem.compareTo(queue[parentIndex]) < 0) {
@@ -40,21 +48,34 @@ public class MinPriorityQueue<T extends Comparable<T>> {
                 break;
             }
         }
-
-        sizePointer++;
     }
 
     /**
      * Removes, and returns, the element at the front of the queue.
      */
     public T remove() {
-        int index = 1;
-        T front = queue[index];
-        queue[index] = queue[sizePointer - 1]; // should be -1!
-        queue[sizePointer - 1] = null;
-        int smallerChildIndex = findSmallerChildIndex(index);
+        if (isEmpty()) {
+            throw new IndexOutOfBoundsException();
+        }
 
-        // while the element is greater than the smaller child
+        int index = 1;
+
+        // remove front, and move last element to front:
+        T front = queue[1];
+        queue[1] = queue[sizePointer - 1]; // should be -1!
+        queue[sizePointer - 1] = null;
+        sizePointer--;
+
+        int smallerChildIndex;
+
+        // if there is just one element, then return it:
+        try {
+            smallerChildIndex = findSmallerChildIndex(index);
+        } catch (NullPointerException npe) {
+            return front;
+        }
+
+        // while the element is greater than the smaller child, swap them:
         while (queue[index].compareTo(queue[smallerChildIndex]) > 0) {
             swap(index, smallerChildIndex);
             index = smallerChildIndex;
@@ -65,7 +86,6 @@ public class MinPriorityQueue<T extends Comparable<T>> {
             }
         }
 
-        sizePointer--;
         return front;
     }
 
@@ -73,7 +93,7 @@ public class MinPriorityQueue<T extends Comparable<T>> {
      * Returns true if the queue is empty, false otherwise.
      */
     public boolean isEmpty() {
-        return sizePointer <= 0;
+        return size() <= 0;
     }
 
     private void swap(int i1, int i2) {
@@ -84,7 +104,7 @@ public class MinPriorityQueue<T extends Comparable<T>> {
 
     // helper method for debugging
     public void print() {
-        for (int i = 0; i < sizePointer; i++) {
+        for (int i = 1; i < sizePointer; i++) {
             System.out.println(((Event) queue[i]).time());
         }
 

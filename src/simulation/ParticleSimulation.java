@@ -20,8 +20,9 @@ public class ParticleSimulation implements Runnable, ParticleEventHandler {
     public ParticleSimulation(String name, ParticlesModel m) {
         this.model = m;
         this.screen = new ParticlesView(name, m);
-        this.queue = new MinPriorityQueue<>(new Tick(1));
+        this.queue = new MinPriorityQueue<>();
 
+        queue.add(new Tick(1));
         for (Collision collision : model.predictAllCollisions(0)) {
             queue.add(collision);
         }
@@ -40,8 +41,7 @@ public class ParticleSimulation implements Runnable, ParticleEventHandler {
             e.printStackTrace();
         }
 
-
-        while (true) {
+        while (!queue.isEmpty()) {
             Event e = queue.remove();
 
             if (e.isValid()) {
